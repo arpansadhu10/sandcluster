@@ -12,7 +12,7 @@
     "pm2": "pm2 start dist/index.js --name sowlow-backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Akshay Jain",
+  "author": "Arpan Sadhu",
   "license": "ISC",
   "devDependencies": {
     "@types/axios": "^0.14.0",
