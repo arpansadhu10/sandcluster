@@ -1,0 +1,1 @@
+Use for server side rendering or storing static data.
