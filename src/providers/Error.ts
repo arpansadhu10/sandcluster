@@ -4,7 +4,10 @@ class ErrorHandler{
         console.log(err)
         if(err instanceof Error){
             return res.status(500).json({message: 'Server Error', error: err.message})
-        }else{
+        }else if(err.name==='Unauthorized'){
+            return res.status(400).json({message: 'Unauthorized', error: err.message})
+        }
+        else{
             return res.status(500).json({message: 'Server Error of Unhandledd Type'})
         }
     }
