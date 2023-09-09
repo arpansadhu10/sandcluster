@@ -13,6 +13,8 @@ function(req, res) {
     res.redirect('/health');
 
 });
+
+
 authRouter.get('/google',
   passport.authenticate('google', { scope: ['profile','email'],
   accessType: 'offline',
