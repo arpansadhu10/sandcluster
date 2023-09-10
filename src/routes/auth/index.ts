@@ -15,6 +15,8 @@ function(req :Request, res:any) {
     res.redirect('http://localhost:3000');
 
 });
+
+
 authRouter.get('/google',
   passport.authenticate('google', { scope: ['profile','email'],
   accessType: 'offline',

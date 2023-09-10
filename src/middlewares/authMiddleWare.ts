@@ -7,6 +7,7 @@ const error={
 }
 const isLoggedIn=(req:Request,res:Response,next:NextFunction)=>{
     if(req.user!==undefined){
+        console.log(req.user,"req.user");
         return next();
     }
     ErrorHandler.APIErrorHandler(error,res)
