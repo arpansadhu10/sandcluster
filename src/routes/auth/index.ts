@@ -1,5 +1,5 @@
 //Import All Routers Here
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 const authRouter=Router()
 import passport from "passport";
 import isLoggedIn from "../../middlewares/authMiddleWare";
@@ -7,10 +7,12 @@ import isLoggedIn from "../../middlewares/authMiddleWare";
 //Import Child Routes Here
 authRouter.get('/google/callback',
 passport.authenticate('google', { failureRedirect: '/login/failed' }),
-function(req, res) {
+function(req :Request, res:any) {
     // Successful authentication, redirect home.
-    console.log(req.user,"USER")
-    res.redirect('/health');
+    // console.log(req,"USERLOG")
+    // res.send(res)
+    console.log("COOOOOkie",res?.headers, "COOOOOKie")
+    res.redirect('http://localhost:3000');
 
 });
 authRouter.get('/google',
@@ -28,6 +30,18 @@ authRouter.get('/login/failed', (req, res, next) => {
         error:true,
         message:"Login Failed"
     })
+});
+
+authRouter.get("/login/success", (req, res) => {
+	if (req.user) {
+		res.status(200).json({
+			error: false,
+			message: "Successfully Loged In",
+			user: req.user,
+		});
+	} else {
+		res.status(403).json({ error: true, message: "Not Authorized" });
+	}
 });
 
 export default authRouter;

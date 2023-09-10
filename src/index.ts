@@ -26,7 +26,13 @@ app.use(
         maxAge:24*60*60*100,
     })
     )
-app.use(cors())
+    app.use(
+        cors({
+            origin: "http://localhost:3000",
+            methods: "GET,POST,PUT,DELETE",
+            credentials: true,
+        })
+    );
 // console.log(process.env.CLIENT_ID)
 app.use(passport.initialize())
 app.use(passport.session())
