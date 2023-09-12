@@ -36,7 +36,7 @@ class ProjectController{
     async getAllProjects(req:Request,res:Response,next:NextFunction){
         try{
             const user=req.user as unknown as InstanceType<typeof User>;
-            const userId=(req.user as HydratedDocument<InstanceType<typeof User>>)._id;
+            const userId=(req.user as HydratedDocument<InstanceType<typeof User>>);
             console.log(userId);
             // const email=user.email;
             const ifUserExists=await ProjectService.ifUserExistsByEmail(String(user.email));
