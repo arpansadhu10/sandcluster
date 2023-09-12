@@ -32,6 +32,42 @@ class ProjectController{
         // const {body.}
 
     }
+    async getAllProjects(req:Request,res:Response,next:NextFunction){
+        try{
+            const user=req.user as unknown as InstanceType<typeof User>;
+            const userId=req.user as HydratedDocument<InstanceType<typeof User>>;
+            // const email=user.email;
+            const ifUserExists=await ProjectService.ifUserExistsByEmail(String(user.email));
+            if(!ifUserExists){
+                // this.projectService.ifUserExistsByEmail
+                throw new APIError("User does Not Exists",400);
+            }
+           
+            const allProject= await ProjectService.getAllProjects(String(userId._id));
+            res.json(ResponseFactory.responseFactory(allProject,"Projects successFully fetched"))
+        }catch(err){
+            next(err);
+        }
+    }
+
+    async getProjectById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { projectId } = req.params;
+            const user = req.user as unknown as InstanceType<typeof User>;
+            const userId = req.user as HydratedDocument<InstanceType<typeof User>>;
+            const project = await ProjectService.getProjectById(projectId);
+            if (!project) {
+                throw new APIError("Project does not exist", 404);
+            }
+            if (project.userId.toString() !== userId._id.toString()) {
+                throw new APIError("Unauthorized access", 403);
+            }
+            res.json(ResponseFactory.responseFactory(project, "Project successfully fetched"));
+        } catch (err) {
+            next(err);
+        }
+    }
+    
 }
 
 export default ProjectController;

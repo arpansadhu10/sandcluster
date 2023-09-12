@@ -16,6 +16,18 @@ class ProjectService{
         })
         return project
     }
+    // done by a noob
+
+    static async getAllProjects(userId: string) {
+        const projects = await Project.find({ userId: userId });
+        return projects;
+    }
+    static async getProjectById(projectId: string) {
+        const projects = await Project.find({ _id: projectId });
+        return projects;
+    }
+
+
     static async ifUserExistsByEmail(email:string){
         return await User.exists({email:email}); 
     }
