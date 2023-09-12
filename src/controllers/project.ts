@@ -13,9 +13,10 @@ class ProjectController{
     //todo: body validaton
     async createProject(req:Request,res:Response,next:NextFunction){
         try{
+            console.log(req.user);
             const user=req.user as unknown as InstanceType<typeof User>;
-            const userId=req.user as HydratedDocument<InstanceType<typeof User>>;
-            // const email=user.email;
+            const userId=(req.user as HydratedDocument<InstanceType<typeof User>>);
+            // console.log(userId);
             const ifUserExists=await ProjectService.ifUserExistsByEmail(String(user.email));
             if(!ifUserExists){
                 // this.projectService.ifUserExistsByEmail
@@ -35,7 +36,8 @@ class ProjectController{
     async getAllProjects(req:Request,res:Response,next:NextFunction){
         try{
             const user=req.user as unknown as InstanceType<typeof User>;
-            const userId=req.user as HydratedDocument<InstanceType<typeof User>>;
+            const userId=(req.user as HydratedDocument<InstanceType<typeof User>>)._id;
+            console.log(userId);
             // const email=user.email;
             const ifUserExists=await ProjectService.ifUserExistsByEmail(String(user.email));
             if(!ifUserExists){
@@ -54,9 +56,9 @@ class ProjectController{
         try {
             const { projectId } = req.params;
             const user = req.user as unknown as InstanceType<typeof User>;
-            const userId = req.user as HydratedDocument<InstanceType<typeof User>>;
+            const userId = (req.user as HydratedDocument<InstanceType<typeof User>>);
             const project = await ProjectService.getProjectById(projectId);
-            if (!project) {
+            if(!project.userId){
                 throw new APIError("Project does not exist", 404);
             }
             if (project.userId.toString() !== userId._id.toString()) {

@@ -10,6 +10,6 @@ const projectController=new ProjectController();
 //Import Child Routes Here
 projectRouter.post('/',isLoggedIn,projectController.createProject)
 projectRouter.get('/all',isLoggedIn,projectController. getAllProjects)
-projectRouter.get('/one',isLoggedIn,projectController. getProjectById)
+projectRouter.get('/:projectId',isLoggedIn,projectController. getProjectById)
 
 export default projectRouter

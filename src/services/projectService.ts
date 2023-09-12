@@ -1,3 +1,4 @@
+import APIError from "../providers/APIError";
 import { ICode, Project } from "../models/projects.model";
 import { User } from "../models/user.model";
 
@@ -23,7 +24,10 @@ class ProjectService{
         return projects;
     }
     static async getProjectById(projectId: string) {
-        const projects = await Project.find({ _id: projectId });
+        const projects = await Project.findById(projectId);
+        if(!projects){
+            throw new APIError("Project Does Not Exists",401);
+        }
         return projects;
     }
 
