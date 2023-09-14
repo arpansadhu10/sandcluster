@@ -69,6 +69,53 @@ class ProjectController{
             next(err);
         }
     }
+    async editProjectById(req:Request,res:Response,next:NextFunction){
+        try{
+            
+            const { projectId } = req.params;
+            const user = req.user as unknown as InstanceType<typeof User>;
+            const userId = (req.user as HydratedDocument<InstanceType<typeof User>>);
+            const project = await ProjectService.editProjectById(projectId,req.body);
+            if(!project.userId){
+                throw new APIError("Project does not exist", 404);
+            }
+            if (project.userId.toString() !== userId._id.toString()) {
+                throw new APIError("Unauthorized access", 403);
+            }
+            res.json(ResponseFactory.responseFactory(project, "Project updated successfully"));
+
+        }catch(err){
+            next(err);
+        }
+    }
+
+    async deleteProjectById(req:Request,res:Response,next:NextFunction){
+        try{
+            const { projectId } = req.params;
+            const user = req.user as unknown as InstanceType<typeof User>;
+            const userId = (req.user as HydratedDocument<InstanceType<typeof User>>);
+            const project = await ProjectService.deleteProjectById(projectId);
+            if(!project.userId){
+                throw new APIError("Project does not exist", 404);
+            }
+            if (project.userId.toString() !== userId._id.toString()) {
+                throw new APIError("Unauthorized access", 403);
+            }
+            res.json(ResponseFactory.responseFactory(project, "Project deleted successfully"));
+        }catch(err){
+            next(err);
+        }
+        
+    }
+    async getAllPublicProjects(req:Request,res:Response,next:NextFunction){
+        try{
+            console.log('hello')
+            const publicProjects=await ProjectService.getPublicProjects();
+            res.json(ResponseFactory.responseFactory(publicProjects, "Public Project fetched successfully"));
+        }catch(err){
+            next(err);
+        }
+    }
     
 }
 

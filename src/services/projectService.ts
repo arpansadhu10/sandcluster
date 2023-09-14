@@ -30,6 +30,31 @@ class ProjectService{
         }
         return projects;
     }
+    static async editProjectById(projectId: string,data:any) {
+        const projects = await Project.findOneAndUpdate({_id:projectId},{
+            ...data
+        },{new:true});
+        if(!projects){
+            throw new APIError("Project Does Not Exists",401);
+        }
+        return projects;
+    }
+    static async deleteProjectById(projectId: string) {
+        const projects = await Project.findByIdAndDelete(projectId);
+        if(!projects){
+            throw new APIError("Project Does Not Exists",401);
+        }
+        return projects;
+    }
+    static async getPublicProjects() {
+        console.log("hello")
+        const projects = await Project.find({isPublic:true});
+        // if(!projects.si){
+        //     throw new APIError("Project Does Not Exists",401);
+        // }
+        console.log(projects)
+        return projects;
+    }
 
 
     static async ifUserExistsByEmail(email:string){
