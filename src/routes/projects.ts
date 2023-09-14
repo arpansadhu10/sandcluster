@@ -10,7 +10,7 @@ const projectController=new ProjectController();
 //Import Child Routes Here
 projectRouter.get('/all',isLoggedIn,projectController. getAllProjects)
 projectRouter.post('/',isLoggedIn,projectController.createProject)
-projectRouter.post('/public',projectController.getAllPublicProjects)
+projectRouter.get('/public',projectController.getAllPublicProjects)
 projectRouter.get('/:projectId',isLoggedIn,projectController. getProjectById)
 projectRouter.post('/:projectId',isLoggedIn,projectController. editProjectById)
 projectRouter.delete('/:projectId',isLoggedIn,projectController. deleteProjectById)
