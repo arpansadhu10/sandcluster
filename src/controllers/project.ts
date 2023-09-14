@@ -109,7 +109,7 @@ class ProjectController{
     }
     async getAllPublicProjects(req:Request,res:Response,next:NextFunction){
         try{
-            console.log('hello')
+            // console.log('hello')
             const publicProjects=await ProjectService.getPublicProjects();
             res.json(ResponseFactory.responseFactory(publicProjects, "Public Project fetched successfully"));
         }catch(err){

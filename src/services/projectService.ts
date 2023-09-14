@@ -47,12 +47,12 @@ class ProjectService{
         return projects;
     }
     static async getPublicProjects() {
-        console.log("hello")
+        // console.log("hello")
         const projects = await Project.find({isPublic:true});
         // if(!projects.si){
         //     throw new APIError("Project Does Not Exists",401);
         // }
-        console.log(projects)
+        // console.log(projects)
         return projects;
     }
 
